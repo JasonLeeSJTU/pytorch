@@ -32,8 +32,11 @@ if __name__ == '__main__':
     net = Net()
     print(net)
     params = list(net.parameters())
-    print(params[0])
+    # print(params[0])
 
     input = torch.randn(1,1,32,32)
     out = net(input)
     print(out)
+
+    net.zero_grad()
+    out.backward(torch.randn(1,10))
