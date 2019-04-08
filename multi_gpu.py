@@ -40,7 +40,9 @@ class Model(nn.Module):
 
     def forward(self, input):
         output = self.fc(input)
-        print(f'In Model: input size {input.size()}, output size {output.size()}')
+        print(f'\tIn Model: input size {input.size()}, output size {output.size()}')
+        return output
+
 
 
 input_size = 5
@@ -57,7 +59,8 @@ if torch.cuda.device_count() > 1:
     model = nn.DataParallel(model)
 model.to(device)
 
-for data in rand_loader:
-    inputs = data.to(device)
-    outputs = model(inputs)
-    print(f"Outside: input size {inputs.size()} output size {outputs.size()}")
+with torch.no_grad():
+    for data in rand_loader:
+        inputs = data.to(device)
+        outputs = model(inputs)
+        print(f"Outside: input size {inputs.size()} output size {outputs.size()}")
