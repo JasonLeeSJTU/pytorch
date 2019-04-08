@@ -36,7 +36,7 @@ def imshow(img):
 if __name__ == '__main__':
     dataiter = iter(trainloader)
     images, labels = dataiter.next()
-    imshow(torchvision.utils.make_grid(images, padding=2))
+    # imshow(torchvision.utils.make_grid(images, padding=2))
     print(' '.join(classes[labels[j]] for j in range(4)))
 
     net = Net()
@@ -71,7 +71,8 @@ if __name__ == '__main__':
     # test the network
     dataiter = iter(testloader)
     images, labels = dataiter.next()
-    imshow(torchvision.utils.make_grid(images))
+    images, labels = images.to(device), labels.to(device)
+    imshow(torchvision.utils.make_grid(images.cpu()))
     print('Ground Truth: ', ' '.join(classes[labels[j]] for j in range(4)))
 
     outputs = net(images)
@@ -84,6 +85,7 @@ if __name__ == '__main__':
     with torch.no_grad():
         for data in testloader:
             images, labels = data
+            images, labels = images.to(device), labels.to(device)
             outputs = net(images)
             _, predicted = torch.max(outputs.data, 1)
             c = predicted == labels
