@@ -34,16 +34,19 @@ def imshow(img):
 
 
 if __name__ == '__main__':
-    dataiter = iter(trainloader)
-    images, labels = dataiter.next()
+    # dataiter = iter(trainloader)
+    # images, labels = dataiter.next()
     # imshow(torchvision.utils.make_grid(images, padding=2))
-    print(' '.join(classes[labels[j]] for j in range(4)))
+    # print(' '.join(classes[labels[j]] for j in range(4)))
 
     net = Net()
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
 
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    if torch.cuda.device_count() > 1:
+        net = nn.DataParallel(net)
+
     net.to(device)
 
     # training the network
@@ -72,7 +75,7 @@ if __name__ == '__main__':
     dataiter = iter(testloader)
     images, labels = dataiter.next()
     images, labels = images.to(device), labels.to(device)
-    imshow(torchvision.utils.make_grid(images.cpu()))
+    # imshow(torchvision.utils.make_grid(images.cpu()))
     print('Ground Truth: ', ' '.join(classes[labels[j]] for j in range(4)))
 
     outputs = net(images)
