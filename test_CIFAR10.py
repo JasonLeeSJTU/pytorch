@@ -13,7 +13,7 @@ transform = ts.Compose([
     ts.ToTensor(),
     ts.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
-batch_size = 1
+batch_size = 4
 
 trainset = torchvision.datasets.CIFAR10(root='./data', train=True,
         download=True, transform=transform)
