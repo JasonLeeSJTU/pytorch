@@ -69,9 +69,9 @@ if __name__ == '__main__':
 
             # print
             running_loss += loss.item()
-            if i % 2000 == 1999:
-                print(f'[{epoch+1}, {i+1}] loss: {running_loss / 2000}')
-                running_loss = 0.0
+            # if i % 2000 == 1999:
+            print(f'[{epoch+1}, {i+1}] loss: {running_loss / (i+1)}')
+                # running_loss = 0.0
     print('Finished training.')
 
     # test the network
